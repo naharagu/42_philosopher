@@ -6,11 +6,19 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:43:44 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/28 12:17:28 by naharagu         ###   ########.fr       */
+/*   Updated: 2022/12/28 18:10:42 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
+
+size_t	get_millisecond(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
 
 int	ft_isdigit(int c)
 {

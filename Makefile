@@ -3,6 +3,7 @@ C_FLAGS 	=	-Wall -Werror -Wextra
 # C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
 NAME		=	philo
 SRCS		= 	main.c \
+				validate_args.c \
 				init.c \
 				utils.c
 OBJS_DIR	=	./obj/

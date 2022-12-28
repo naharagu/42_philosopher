@@ -6,36 +6,44 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/28 12:15:44 by naharagu         ###   ########.fr       */
+/*   Updated: 2022/12/28 18:20:21 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
 
-int	validate_args(int argc, char **argv)
+int	init_philo(t_info *info)
 {
 	int	i;
-	int	j;
 
-	if (argc != 5 || argc != 6)
-		return (-1);
-	i = 1;
-	while (argv[i])
+	i = 0;
+	info->philo = malloc(sizeof(t_philo) * info->num_philo);
+	if (!info->philo)
+		exit(0);
+	while (i < info->num_philo)
 	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (!ft_isdigit(argv[i][j]))
-				return (-1);
-			j++;
-		}
+		info->philo[i].id = i;
+		info->philo[i].eating = false;
+		info->philo[i].time_last_ate = i;
+		pthread_mutex_init(&info->philo[i].fork, NULL);
+		info->philo[i].info = info;
 		i++;
 	}
 	return (0);
 }
 
-int	init(t_info *info)
+int	init(t_info *info, int argc, char **argv)
 {
-	info->total_ate = 0;
+	info->num_philo = ft_atoi(argv[1]);
+	info->time_die = ft_atoi(argv[2]);
+	info->time_eat = ft_atoi(argv[3]);
+	info->time_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		info->num_must_eat = ft_atoi(argv[5]);
+	else
+		info->num_must_eat = -1;
+	printf("!num of philos is %d\n", info->num_philo);
+	info->time_current = 0;
+	init_philo(info);
 	return (0);
 }
