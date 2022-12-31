@@ -1,6 +1,6 @@
 CC			=	gcc
-C_FLAGS 	=	-Wall -Werror -Wextra
-# C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
+# C_FLAGS 	=	-Wall -Werror -Wextra
+C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
 NAME		=	philo
 SRCS		= 	main.c \
 				validate_args.c \
@@ -13,8 +13,8 @@ $(NAME): $(OBJS)
 	$(CC) $(C_FLAGS) $(OBJS) -o $(NAME)
 
 $(OBJS_DIR)%.o: %.c
-		mkdir -p $(OBJS_DIR)
-		$(CC) $(CFLAGS) -o $@ -c $<
+	mkdir -p $(OBJS_DIR)
+	$(CC) $(CFLAGS) -o $@ -c $<
 
 all: $(NAME)
 

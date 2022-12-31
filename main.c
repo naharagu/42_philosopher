@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/28 18:24:41 by naharagu         ###   ########.fr       */
+/*   Updated: 2022/12/31 20:44:02 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	philo(t_info *info)
 	{
 		pthread_create(&info->philo[i].thread, NULL, control_philo, \
 				&info->philo[i]);
+		i++;
 	}
-	printf("!num of philos is %\n", info->num_philo);
+	return ;
 }
 
 int	main(int argc, char **argv)

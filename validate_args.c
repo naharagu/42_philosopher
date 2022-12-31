@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 12:45:29 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/28 12:46:10 by naharagu         ###   ########.fr       */
+/*   Updated: 2022/12/31 20:43:35 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	validate_args(int argc, char **argv)
 	int	i;
 	int	j;
 
-	if (argc != 5 || argc != 6)
+	if (argc != 5 && argc != 6)
 		return (-1);
 	i = 1;
 	while (argv[i])
