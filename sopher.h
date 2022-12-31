@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/28 18:16:41 by naharagu         ###   ########.fr       */
+/*   Updated: 2022/12/31 20:46:56 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_philo
 	size_t				time_last_ate;
 	pthread_t			thread;
 	pthread_mutex_t		fork;
-	t_info				*info;
 }						t_philo;
 
 int						validate_args(int argc, char **argv);

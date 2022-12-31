@@ -6,19 +6,11 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/31 20:44:02 by naharagu         ###   ########.fr       */
+/*   Updated: 2022/12/31 21:04:13 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
-
-void	*control_philo(void *p)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)p;
-	return (NULL);
-}
 
 void	philo(t_info *info)
 {
@@ -29,8 +21,16 @@ void	philo(t_info *info)
 	i = 0;
 	while (i < info->num_philo)
 	{
+		// printf("TEST!\n");
 		pthread_create(&info->philo[i].thread, NULL, control_philo, \
-				&info->philo[i]);
+		info);
+		i++;
+	}
+	i = 0;
+	while (i < info->num_philo)
+	{
+		// printf("TEST2!\n");
+		pthread_join(info->philo[i].thread, (void *)info);
 		i++;
 	}
 	return ;
