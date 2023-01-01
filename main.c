@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/31 21:04:13 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/01 12:47:07 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	philo(t_info *info)
 	{
 		// printf("TEST!\n");
 		pthread_create(&info->philo[i].thread, NULL, control_philo, \
-		info);
+		info->philo);
 		i++;
 	}
 	i = 0;
 	while (i < info->num_philo)
 	{
 		// printf("TEST2!\n");
-		pthread_join(info->philo[i].thread, (void *)info);
+		pthread_join(info->philo[i].thread, (void *)info->philo);
 		i++;
 	}
 	return ;
@@ -47,5 +47,5 @@ int	main(int argc, char **argv)
 		exit(0);
 	init(info, argc, argv);
 	philo(info);
-	return (0);
+	exit_and_free(1, info);
 }

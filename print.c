@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/28 14:48:39 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/31 22:30:59 by naharagu         ###   ########.fr       */
+/*   Created: 2023/01/01 09:15:17 by naharagu          #+#    #+#             */
+/*   Updated: 2023/01/01 12:41:15 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
 
-void	exit_and_free(int n, t_info *info)
+void	print_action(t_philo *philo, char *action)
 {
-	if (n == 0)
-		return ;
-	if (info)
-		free(info);
-	exit(0);
+	size_t	time;
+
+	time = get_millisecond() - philo->info->time_current;
+	pthread_mutex_lock(&philo->print);
+	printf("%lu %d %s\n", time, philo->id, action);
+	pthread_mutex_lock(&philo->print);
 }

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/31 20:47:58 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/01 12:47:05 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ int	init_philo(t_info *info)
 		exit(0);
 	while (i < info->num_philo)
 	{
-		info->philo[i].id = i;
+		info->philo[i].id = i + 1;
 		info->philo[i].eating = false;
 		info->philo[i].time_last_ate = i;
-		pthread_mutex_init(&info->philo[i].fork, NULL);
+		pthread_mutex_init(&info->philo[i].fork_right, NULL);
+		pthread_mutex_init(&info->philo[i].fork_left, NULL);
+		pthread_mutex_init(&info->philo[i].print, NULL);
+		info->philo[i].info = info;
 		i++;
 	}
 	return (0);

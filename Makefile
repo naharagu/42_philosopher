@@ -6,7 +6,9 @@ SRCS		= 	main.c \
 				validate_args.c \
 				init.c \
 				utils.c \
-				control_philo.c
+				print.c \
+				control_philo.c \
+				exit.c
 OBJS_DIR	=	./obj/
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)%.o)
 

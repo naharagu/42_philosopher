@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/31 20:46:56 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/01 12:41:49 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_info	t_info;
 typedef struct s_philo	t_philo;
@@ -38,7 +39,10 @@ typedef struct s_philo
 	bool				eating;
 	size_t				time_last_ate;
 	pthread_t			thread;
-	pthread_mutex_t		fork;
+	pthread_mutex_t		fork_right;
+	pthread_mutex_t		fork_left;
+	pthread_mutex_t		print;
+	t_info				*info;
 }						t_philo;
 
 int						validate_args(int argc, char **argv);
@@ -47,5 +51,7 @@ int						ft_atoi(const char *str);
 int						init(t_info *info, int argc, char **argv);
 size_t					get_millisecond(void);
 void					*control_philo(void *p);
+void					print_action(t_philo *philo, char *action);
+void					exit_and_free(int n, t_info *info);
 
 #endif
