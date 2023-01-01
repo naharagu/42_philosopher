@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/01 16:53:39 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/01 18:42:20 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,9 @@ void	philo(t_info *info)
 {
 	int	i;
 
-	info->time_current = get_millisecond();
-	info->philo->time_last_ate = info->time_current;
 	i = 0;
 	while (i < info->num_philo)
 	{
-		// printf("TEST!\n");
 		pthread_create(&info->philo[i].thread, NULL, control_philo,
 				info->philo);
 		i++;
@@ -57,7 +54,7 @@ void	philo(t_info *info)
 	i = 0;
 	while (i < info->num_philo)
 	{
-		pthread_join(info->philo[i].thread, (void *)info->philo);
+		pthread_join(info->philo[i].thread, NULL);
 		i++;
 	}
 	return ;
