@@ -6,11 +6,20 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/01 23:01:11 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/01 23:23:25 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
+
+void	ajust_time(size_t ajust_time)
+{
+	size_t	target_time;
+
+	target_time = get_millisecond() + ajust_time;
+	while (get_millisecond() < target_time)
+		usleep(100);
+}
 
 void	take_forks(t_philo *philo)
 {
@@ -34,9 +43,9 @@ void	start_eating(t_philo *philo)
 	id = philo->id;
 	num = philo->info->num_philo;
 	print_action(philo, "is eating");
+	ajust_time(philo->info->time_eat);
 	philo->info->time_stamp = get_millisecond();
 	philo->time_last_ate = get_millisecond();
-	usleep(philo->info->time_eat * 1000);
 	pthread_mutex_unlock(&philo->info->fork[id - 1]);
 	pthread_mutex_unlock(&philo->info->fork[id % num]);
 	return ;
@@ -44,9 +53,10 @@ void	start_eating(t_philo *philo)
 
 void	start_sleeping(t_philo *philo)
 {
-	philo->info->time_stamp = get_millisecond();
 	print_action(philo, "is sleeping");
-	usleep(philo->info->time_sleep * 1000);
+	ajust_time(philo->info->time_sleep);
+	philo->info->time_stamp = get_millisecond();
+	print_action(philo, "is thinking");
 	return ;
 }
 
@@ -56,7 +66,7 @@ void	*control_philo(void *p)
 
 	philo = (t_philo *)p;
 	if (philo->id % 2 == 1)
-		usleep(1000);
+		ajust_time(20);
 	while (true)
 	{
 		take_forks(philo);

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/01 18:42:20 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/01 23:13:43 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	philo(t_info *info)
 	while (i < info->num_philo)
 	{
 		pthread_create(&info->philo[i].thread, NULL, control_philo,
-				info->philo);
+				&info->philo[i]);
 		i++;
 	}
 	i = 0;
