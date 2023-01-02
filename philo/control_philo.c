@@ -6,17 +6,17 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 12:46:51 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:45:53 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
 
-void	ajust_time(size_t ajust_time)
+void	ajust_time(size_t ajust_dutation)
 {
 	size_t	target_time;
 
-	target_time = get_millisecond() + ajust_time;
+	target_time = get_millisecond() + ajust_dutation;
 	while (get_millisecond() < target_time)
 		usleep(100);
 }

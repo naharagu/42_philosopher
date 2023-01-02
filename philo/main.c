@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 13:19:51 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:49:41 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	monitor_philo(t_philo *philo)
 		{
 			philo->info->time_stamp = get_millisecond();
 			print_action(philo, "died");
-			// pthread_mutex_unlock(&philo->info->fork[philo->id - 1]);
-			pthread_join(philo->thread, NULL);
-			exit(0);
+			pthread_mutex_lock(&philo->info->print);
 		}
 	}
 	return ;
@@ -32,7 +30,7 @@ void	start_monitor(t_philo *philo)
 {
 	pthread_t	moni;
 
-	pthread_create(&moni, NULL, &monitor_philo, philo);
+	pthread_create(&moni, NULL, monitor_philo, philo);
 	pthread_join(&moni, NULL);
 	return ;
 }

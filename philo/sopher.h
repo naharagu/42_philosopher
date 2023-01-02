@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 12:47:06 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:37:38 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_info
 	size_t				time_start;
 	pthread_mutex_t		info_mutex;
 	pthread_mutex_t		*fork;
+	pthread_mutex_t		print;
 	t_philo				*philo;
 }						t_info;
 typedef struct s_philo
@@ -42,7 +43,6 @@ typedef struct s_philo
 	bool				eating;
 	size_t				time_last_ate;
 	pthread_t			thread;
-	pthread_mutex_t		print;
 	t_info				*info;
 }						t_philo;
 
