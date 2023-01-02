@@ -1,13 +1,12 @@
 CC			=	gcc
-# C_FLAGS 	=	-Wall -Werror -Wextra
-C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
+C_FLAGS 	=	-Wall -Werror -Wextra
+# C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
 # C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=thread
 NAME		=	philo
 SRCS		= 	main.c \
 				validate_args.c \
 				init.c \
 				utils.c \
-				print.c \
 				control_philo.c \
 				exit.c
 OBJS_DIR	=	./obj/

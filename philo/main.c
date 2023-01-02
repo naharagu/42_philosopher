@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 13:49:41 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:12:19 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ void	monitor_philo(t_philo *philo)
 		{
 			philo->info->time_stamp = get_millisecond();
 			print_action(philo, "died");
+			philo->info->flag_end = true;
+			philo->info->fork[philo->id - 1];
 			pthread_mutex_lock(&philo->info->print);
+			exit(0);
 		}
+		if (philo->info->flag_end)
+			return ;
 	}
-	return ;
 }
 
 void	start_monitor(t_philo *philo)
@@ -68,3 +72,8 @@ int	main(int argc, char **argv)
 	philo(info);
 	exit_and_free(1, info);
 }
+
+// __attribute__((destructor))
+// static void destructor() {
+// 	system("leaks -q philo");
+// }

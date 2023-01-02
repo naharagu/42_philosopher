@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 13:45:53 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:12:10 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ void	*control_philo(void *p)
 
 	philo = (t_philo *)p;
 	if (philo->id % 2 == 1)
-		ajust_time(2);
+		ajust_time(20);
 	start_monitor(philo);
 	while (true)
 	{
+		if (philo->info->flag_end)
+			return (NULL);
 		take_forks(philo);
 		start_eating(philo);
 		start_sleeping(philo);
 	}
-	return (NULL);
 }

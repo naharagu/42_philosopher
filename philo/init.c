@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 13:39:03 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:33:25 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	init(t_info *info, int argc, char **argv)
 		info->num_must_eat = -1;
 	info->time_stamp = get_millisecond();
 	info->time_start = get_millisecond();
-	pthread_mutex_init(&info->info_mutex, NULL);
+	info->flag_end = false;
 	init_philo(info);
 	return (0);
 }

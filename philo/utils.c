@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:43:44 by naharagu          #+#    #+#             */
-/*   Updated: 2022/12/28 18:10:42 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:07:18 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,16 @@ size_t	get_millisecond(void)
 
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	print_action(t_philo *philo, char *action)
+{
+	size_t	time;
+
+	time = philo->info->time_stamp - philo->info->time_start;
+	pthread_mutex_lock(&philo->info->print);
+	printf("%lu %d %s\n", time, philo->id, action);
+	pthread_mutex_unlock(&philo->info->print);
 }
 
 int	ft_isdigit(int c)
