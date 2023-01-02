@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 12:33:36 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 12:47:06 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ size_t					get_millisecond(void);
 void					*control_philo(void *p);
 void					print_action(t_philo *philo, char *action);
 void					exit_and_free(int n, t_info *info);
-void	monitor_philo(t_philo *philo);
+void					start_monitor(t_philo *philo);
 
 #endif
