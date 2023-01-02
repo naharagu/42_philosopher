@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 17:12:10 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:15:09 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ void	take_forks(t_philo *philo)
 	id = philo->id;
 	num = philo->info->num_philo;
 	pthread_mutex_lock(&philo->info->fork[id - 1]);
-	print_action(philo, "has taken a fork");
+	if (!philo->info->flag_end)
+		print_action(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->info->fork[id % num]);
-	print_action(philo, "has taken a fork");
+	if (!philo->info->flag_end)
+		print_action(philo, "has taken a fork");
 	return ;
 }
 
@@ -42,7 +44,8 @@ void	start_eating(t_philo *philo)
 
 	id = philo->id;
 	num = philo->info->num_philo;
-	print_action(philo, "is eating");
+	if (!philo->info->flag_end)
+		print_action(philo, "is eating");
 	ajust_time(philo->info->time_eat);
 	philo->info->time_stamp = get_millisecond();
 	philo->time_last_ate = get_millisecond();
@@ -53,10 +56,12 @@ void	start_eating(t_philo *philo)
 
 void	start_sleeping(t_philo *philo)
 {
-	print_action(philo, "is sleeping");
+	if (!philo->info->flag_end)
+		print_action(philo, "is sleeping");
 	ajust_time(philo->info->time_sleep);
 	philo->info->time_stamp = get_millisecond();
-	print_action(philo, "is thinking");
+	if (!philo->info->flag_end)
+		print_action(philo, "is thinking");
 	return ;
 }
 

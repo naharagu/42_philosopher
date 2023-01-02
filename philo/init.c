@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 14:33:25 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:24:46 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	init(t_info *info, int argc, char **argv)
 	if (argc == 6)
 		info->num_must_eat = ft_atoi(argv[5]);
 	else
-		info->num_must_eat = -1;
+		info->num_must_eat = ULONG_LONG_MAX;
 	info->time_stamp = get_millisecond();
 	info->time_start = get_millisecond();
 	info->flag_end = false;

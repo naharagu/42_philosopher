@@ -1,6 +1,6 @@
 CC			=	gcc
-C_FLAGS 	=	-Wall -Werror -Wextra
-# C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
+# C_FLAGS 	=	-Wall -Werror -Wextra
+C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
 # C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=thread
 NAME		=	philo
 SRCS		= 	main.c \
