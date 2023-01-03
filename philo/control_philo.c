@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 10:37:11 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 11:18:37 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ajust_time(size_t ajust_dutation)
 		usleep(100);
 }
 
-void	take_forks(t_philo *philo)
+void	philo_fork(t_philo *philo)
 {
 	size_t	id;
 	size_t	num;
@@ -37,7 +37,7 @@ void	take_forks(t_philo *philo)
 	return ;
 }
 
-void	start_eating(t_philo *philo)
+void	philo_eat(t_philo *philo)
 {
 	size_t	id;
 	size_t	num;
@@ -54,13 +54,13 @@ void	start_eating(t_philo *philo)
 	return ;
 }
 
-void	start_sleeping(t_philo *philo)
+void	philo_sleep_think(t_philo *philo)
 {
 	if (philo->info->num_must_eat != -1)
 	{
 		philo->cnt_times_ate++;
 		if (philo->cnt_times_ate == philo->info->num_must_eat)
-			philo->info->cnt_finish_must++;
+			philo->info->num_finish_must++;
 	}
 	if (!philo->info->flag_end)
 		print_action(philo, "is sleeping");
@@ -83,8 +83,8 @@ void	*control_philo(void *p)
 	{
 		if (philo->info->flag_end)
 			return (NULL);
-		take_forks(philo);
-		start_eating(philo);
-		start_sleeping(philo);
+		philo_fork(philo);
+		philo_eat(philo);
+		philo_sleep_think(philo);
 	}
 }
