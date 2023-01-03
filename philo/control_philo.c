@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 10:19:10 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:37:11 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	take_forks(t_philo *philo)
 	id = philo->id;
 	num = philo->info->num_philo;
 	pthread_mutex_lock(&philo->info->fork[id - 1]);
-	if (!philo->info->flag_end && !philo->flag_must_eat)
+	if (!philo->info->flag_end)
 		print_action(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->info->fork[id % num]);
-	if (!philo->info->flag_end && !philo->flag_must_eat)
+	if (!philo->info->flag_end)
 		print_action(philo, "has taken a fork");
 	return ;
 }
@@ -44,7 +44,7 @@ void	start_eating(t_philo *philo)
 
 	id = philo->id;
 	num = philo->info->num_philo;
-	if (!philo->info->flag_end && !philo->flag_must_eat)
+	if (!philo->info->flag_end)
 		print_action(philo, "is eating");
 	ajust_time(philo->info->time_eat);
 	philo->info->time_stamp = get_millisecond();
@@ -58,18 +58,15 @@ void	start_sleeping(t_philo *philo)
 {
 	if (philo->info->num_must_eat != -1)
 	{
-		philo->cnt_must_eat++;
-		if (philo->cnt_must_eat == philo->info->num_must_eat)
-		{
-			philo->flag_must_eat = true;
+		philo->cnt_times_ate++;
+		if (philo->cnt_times_ate == philo->info->num_must_eat)
 			philo->info->cnt_finish_must++;
-		}
 	}
-	if (!philo->info->flag_end && !philo->flag_must_eat)
+	if (!philo->info->flag_end)
 		print_action(philo, "is sleeping");
 	ajust_time(philo->info->time_sleep);
 	philo->info->time_stamp = get_millisecond();
-	if (!philo->info->flag_end && !philo->flag_must_eat)
+	if (!philo->info->flag_end)
 		print_action(philo, "is thinking");
 	return ;
 }
@@ -84,7 +81,7 @@ void	*control_philo(void *p)
 	start_monitor(philo);
 	while (true)
 	{
-		if (philo->info->flag_end || philo->flag_must_eat)
+		if (philo->info->flag_end)
 			return (NULL);
 		take_forks(philo);
 		start_eating(philo);

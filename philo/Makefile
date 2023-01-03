@@ -1,13 +1,12 @@
 CC			=	gcc
-# C_FLAGS 	=	-Wall -Werror -Wextra
-C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=address
-# C_FLAGS 	=	-Wall -Werror -Wextra -g -fsanitize=thread
+C_FLAGS 	=	-Wall -Werror -Wextra
 NAME		=	philo
 SRCS		= 	main.c \
 				validate_args.c \
 				init.c \
 				utils.c \
 				control_philo.c \
+				monitor.c \
 				exit.c
 OBJS_DIR	=	./obj/
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)%.o)

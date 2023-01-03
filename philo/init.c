@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 00:56:46 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:36:12 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	init_philo(t_info *info)
 	while (i < info->num_philo)
 	{
 		info->philo[i].id = i + 1;
-		info->philo[i].cnt_must_eat = 0;
-		info->philo[i].flag_must_eat = false;
+		info->philo[i].cnt_times_ate = 0;
 		info->philo[i].time_last_ate = get_millisecond();
 		pthread_mutex_init(&info->fork[i], NULL);
 		pthread_mutex_init(&info->print, NULL);
@@ -49,6 +48,7 @@ int	init(t_info *info, int argc, char **argv)
 		info->num_must_eat = -1;
 	info->time_stamp = get_millisecond();
 	info->time_start = get_millisecond();
+	info->cnt_finish_must = 0;
 	info->flag_end = false;
 	init_philo(info);
 	return (0);

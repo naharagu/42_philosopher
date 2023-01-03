@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 09:52:18 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:40:08 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ typedef struct s_info
 typedef struct s_philo
 {
 	int					id;
-	int					cnt_must_eat;
-	bool				flag_must_eat;
+	int					cnt_times_ate;
 	size_t				time_last_ate;
 	pthread_t			thread;
 	t_info				*info;
@@ -54,6 +53,7 @@ int						ft_atoi(const char *str);
 int						init(t_info *info, int argc, char **argv);
 size_t					get_millisecond(void);
 void					*control_philo(void *p);
+void					start_monitor(t_philo *philo);
 void					print_action(t_philo *philo, char *action);
 void					start_monitor(t_philo *philo);
 void					free_and_exit(t_info *info);
