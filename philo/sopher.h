@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 00:56:28 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 09:52:18 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_info
 	int					time_eat;
 	int					time_sleep;
 	int					num_must_eat;
+	int					cnt_finish_must;
 	size_t				time_stamp;
 	size_t				time_start;
 	bool				flag_end;

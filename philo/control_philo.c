@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 01:09:12 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:19:10 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	take_forks(t_philo *philo)
 	id = philo->id;
 	num = philo->info->num_philo;
 	pthread_mutex_lock(&philo->info->fork[id - 1]);
-	if (!philo->info->flag_end)
+	if (!philo->info->flag_end && !philo->flag_must_eat)
 		print_action(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->info->fork[id % num]);
-	if (!philo->info->flag_end)
+	if (!philo->info->flag_end && !philo->flag_must_eat)
 		print_action(philo, "has taken a fork");
 	return ;
 }
@@ -44,13 +44,6 @@ void	start_eating(t_philo *philo)
 
 	id = philo->id;
 	num = philo->info->num_philo;
-	if (philo->info->num_must_eat != -1)
-	{
-		philo->cnt_must_eat++;
-		// printf("ID: %d: %d %d\n", philo->id ,philo->cnt_must_eat, philo->info->num_must_eat);
-		if (philo->cnt_must_eat == philo->info->num_must_eat)
-			philo->flag_must_eat = true;
-	}
 	if (!philo->info->flag_end && !philo->flag_must_eat)
 		print_action(philo, "is eating");
 	ajust_time(philo->info->time_eat);
@@ -63,11 +56,20 @@ void	start_eating(t_philo *philo)
 
 void	start_sleeping(t_philo *philo)
 {
-	if (!philo->info->flag_end)
+	if (philo->info->num_must_eat != -1)
+	{
+		philo->cnt_must_eat++;
+		if (philo->cnt_must_eat == philo->info->num_must_eat)
+		{
+			philo->flag_must_eat = true;
+			philo->info->cnt_finish_must++;
+		}
+	}
+	if (!philo->info->flag_end && !philo->flag_must_eat)
 		print_action(philo, "is sleeping");
 	ajust_time(philo->info->time_sleep);
 	philo->info->time_stamp = get_millisecond();
-	if (!philo->info->flag_end)
+	if (!philo->info->flag_end && !philo->flag_must_eat)
 		print_action(philo, "is thinking");
 	return ;
 }

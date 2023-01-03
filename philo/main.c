@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 01:08:11 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 10:15:41 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,27 @@
 
 void	monitor_philo(t_philo *philo)
 {
+	t_info	*info;
+
+	info = philo->info;
 	while (true)
 	{
-		if ((get_millisecond() - philo->time_last_ate) > philo->info->time_die
-			|| philo->flag_must_eat)
+		if ((get_millisecond() - philo->time_last_ate) > info->time_die)
 		{
-			philo->info->time_stamp = get_millisecond();
+			info->time_stamp = get_millisecond();
 			print_action(philo, "died");
-			philo->info->flag_end = true;
-			pthread_mutex_unlock(&philo->info->fork[philo->id - 1]);
-			pthread_mutex_lock(&philo->info->print);
+			info->flag_end = true;
 		}
-		if (philo->info->flag_end)
+		if (info->cnt_finish_must == info->num_must_eat)
+			info->flag_end = true;
+		if (info->flag_end || philo->flag_must_eat)
+			pthread_mutex_unlock(&info->fork[philo->id - 1]);
+		if (info->flag_end)
+		{
+			pthread_mutex_lock(&info->print);
 			return ;
+		}
+		usleep(100);
 	}
 }
 
@@ -54,7 +62,7 @@ void	philo(t_info *info)
 	while (i < info->num_philo)
 	{
 		pthread_join(info->philo[i].thread, NULL);
-		printf("ID: %d done\n", i + 1);
+		// printf("ID: %d done\n", i + 1);
 		i++;
 	}
 	return ;
