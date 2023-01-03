@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 17:22:36 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 00:56:28 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ typedef struct s_info
 typedef struct s_philo
 {
 	int					id;
-	bool				eating;
+	int					cnt_must_eat;
+	bool				flag_must_eat;
 	size_t				time_last_ate;
 	pthread_t			thread;
 	t_info				*info;

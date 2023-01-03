@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 17:27:01 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 01:08:11 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	monitor_philo(t_philo *philo)
 {
 	while (true)
 	{
-		if ((get_millisecond() - philo->time_last_ate) > philo->info->time_die)
+		if ((get_millisecond() - philo->time_last_ate) > philo->info->time_die
+			|| philo->flag_must_eat)
 		{
 			philo->info->time_stamp = get_millisecond();
 			print_action(philo, "died");
@@ -53,6 +54,7 @@ void	philo(t_info *info)
 	while (i < info->num_philo)
 	{
 		pthread_join(info->philo[i].thread, NULL);
+		printf("ID: %d done\n", i + 1);
 		i++;
 	}
 	return ;

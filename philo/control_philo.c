@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/02 17:15:09 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/03 01:09:12 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,14 @@ void	start_eating(t_philo *philo)
 
 	id = philo->id;
 	num = philo->info->num_philo;
-	if (!philo->info->flag_end)
+	if (philo->info->num_must_eat != -1)
+	{
+		philo->cnt_must_eat++;
+		// printf("ID: %d: %d %d\n", philo->id ,philo->cnt_must_eat, philo->info->num_must_eat);
+		if (philo->cnt_must_eat == philo->info->num_must_eat)
+			philo->flag_must_eat = true;
+	}
+	if (!philo->info->flag_end && !philo->flag_must_eat)
 		print_action(philo, "is eating");
 	ajust_time(philo->info->time_eat);
 	philo->info->time_stamp = get_millisecond();
@@ -75,7 +82,7 @@ void	*control_philo(void *p)
 	start_monitor(philo);
 	while (true)
 	{
-		if (philo->info->flag_end)
+		if (philo->info->flag_end || philo->flag_must_eat)
 			return (NULL);
 		take_forks(philo);
 		start_eating(philo);
