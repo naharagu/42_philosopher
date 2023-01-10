@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/03 11:18:25 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/10 22:03:18 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ int	init_philo(t_info *info)
 	i = 0;
 	info->philo = malloc(sizeof(t_philo) * info->num_philo);
 	if (!info->philo)
-		exit(0);
+		return (-1);
 	info->fork = malloc(sizeof(pthread_mutex_t) * info->num_philo);
 	if (!info->fork)
-		exit(0);
+		return (-1);
 	while (i < info->num_philo)
 	{
 		info->philo[i].id = i + 1;

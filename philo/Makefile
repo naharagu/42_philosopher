@@ -7,7 +7,7 @@ SRCS		= 	main.c \
 				utils.c \
 				control_philo.c \
 				monitor.c \
-				exit.c
+				free.c
 OBJS_DIR	=	./obj/
 OBJS		=	$(SRCS:%.c=$(OBJS_DIR)%.o)
 
