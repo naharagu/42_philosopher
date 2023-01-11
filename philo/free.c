@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 14:48:39 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/10 22:03:41 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:12:02 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_all(t_info *info)
 		i++;
 	}
 	pthread_mutex_destroy(&info->print);
+	pthread_mutex_destroy(&info->control);
 	free(info->philo);
 	free(info->fork);
 	free(info);

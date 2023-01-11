@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/10 22:03:18 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:11:53 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	init(t_info *info, int argc, char **argv)
 	info->num_finish_must = 0;
 	info->flag_end = false;
 	pthread_mutex_init(&info->print, NULL);
+	pthread_mutex_init(&info->control, NULL);
 	init_philo(info);
 	return (0);
 }
