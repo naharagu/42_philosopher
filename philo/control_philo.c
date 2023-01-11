@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/11 21:34:37 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/11 21:50:31 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ void	philo_fork(t_philo *philo)
 
 	id = philo->id;
 	num = philo->info->num_philo;
-	pthread_mutex_lock(&philo->info->fork[id % num]);
+	pthread_mutex_lock(&philo->info->fork[id - 1]);
 	if (!philo->info->flag_end)
 		print_action(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->info->fork[id - 1]);
+	pthread_mutex_lock(&philo->info->fork[id % num]);
 	if (!philo->info->flag_end)
 		print_action(philo, "has taken a fork");
 	return ;
