@@ -6,21 +6,22 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/10 22:03:06 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/13 00:15:32 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
 
-void	philo(t_info *info)
+int	philo(t_info *info)
 {
 	int	i;
 
 	i = 0;
 	while (i < info->num_philo)
 	{
-		pthread_create(&info->philo[i].thread, NULL, control_philo, \
-		&info->philo[i]);
+		if (pthread_create(&info->philo[i].thread, NULL, control_philo, \
+		&info->philo[i]))
+			return (-1);
 		i++;
 	}
 	i = 0;
@@ -29,7 +30,7 @@ void	philo(t_info *info)
 		pthread_join(info->philo[i].thread, NULL);
 		i++;
 	}
-	return ;
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -43,7 +44,11 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init(info, argc, argv) == -1)
 		return (1);
-	philo(info);
+	if (philo(info) == -1)
+	{
+		free_all(info);
+		return (1);
+	}
 	free_all(info);
 	return (0);
 }
