@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 10:38:50 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/13 00:17:49 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/13 09:21:08 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,4 @@ void	*monitor_philo(void *p)
 		}
 		pthread_mutex_unlock(&info->control);
 	}
-}
-
-void	start_monitor(t_philo *philo)
-{
-	pthread_t	moni;
-
-	if (pthread_create(&moni, NULL, monitor_philo, philo))
-	{
-		philo->info->flag_end = true;
-		return ;
-	}
-	pthread_detach(moni);
-	return ;
 }
