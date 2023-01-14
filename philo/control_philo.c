@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 12:14:13 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 13:10:52 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ajust_time(size_t ajust_dutation)
 
 	target_time = get_millisecond() + ajust_dutation;
 	while (get_millisecond() < target_time)
-		usleep(100);
+		usleep(10);
 }
 
 void	philo_fork(t_philo *philo)
@@ -81,8 +81,8 @@ void	*philo(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	if (philo->id % 2 == 1)
-		usleep(200);
+	if (philo->id % 2 == 0)
+		ajust_time(200);
 	while (true)
 	{
 		philo_fork(philo);
