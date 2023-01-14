@@ -6,11 +6,16 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 11:15:52 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 11:34:08 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
+
+__attribute__((destructor))
+static void destructor() {
+	system("leaks -q philo");
+}
 
 int	start_philo(t_info *info)
 {
