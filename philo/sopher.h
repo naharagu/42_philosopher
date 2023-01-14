@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 08:49:03 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:59:16 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_info
 	size_t				time_start;
 	bool				end_flag;
 	pthread_mutex_t		*fork;
-	pthread_mutex_t		print_lock;
 	pthread_mutex_t		lock_end;
 	pthread_mutex_t		lock_num_eat;
 	pthread_mutex_t		lock_time_stamp;

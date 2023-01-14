@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 09:12:00 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:59:48 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	init(t_info *info, int argc, char **argv)
 	info->time_start = get_millisecond();
 	info->num_finish_must = 0;
 	info->end_flag = false;
-	pthread_mutex_init(&info->print_lock, NULL);
 	pthread_mutex_init(&info->lock_end, NULL);
 	pthread_mutex_init(&info->lock_num_eat, NULL);
 	pthread_mutex_init(&info->lock_time_stamp, NULL);

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:43:44 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 09:24:57 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:59:33 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ void	print_action(t_philo *philo, char *action)
 	pthread_mutex_lock(&philo->info->lock_time_stamp);
 	philo->info->time_stamp = get_millisecond();
 	time = philo->info->time_stamp - philo->info->time_start;
-	pthread_mutex_unlock(&philo->info->lock_time_stamp);
-	// pthread_mutex_lock(&philo->info->print_lock);
 	printf("%lu %d %s\n", time, philo->id, action);
-	// pthread_mutex_unlock(&philo->info->print_lock);
+	pthread_mutex_unlock(&philo->info->lock_time_stamp);
 }
 
 void	free_all(t_info *info)
