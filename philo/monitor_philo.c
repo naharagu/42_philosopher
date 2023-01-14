@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
+/*   monitor_philo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 10:38:50 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 09:59:08 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 11:08:08 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,14 @@ void	*monitor_philo(void *p)
 		}
 		usleep(200);
 	}
+}
+
+int	start_monitor(t_info *info)
+{
+	pthread_t			thread_moni;
+
+	if (pthread_create(&thread_moni, NULL, monitor_philo, info))
+		return (-1);
+	pthread_join(thread_moni, NULL);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 09:53:29 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 11:13:26 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	philo_sleep_think(t_philo *philo)
 	return ;
 }
 
-void	*control_philo(void *p)
+void	*philo(void *p)
 {
 	t_philo	*philo;
 

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 09:59:16 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 11:14:04 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_info
 	pthread_mutex_t		lock_end;
 	pthread_mutex_t		lock_num_eat;
 	pthread_mutex_t		lock_time_stamp;
-	pthread_t			thread_moni;
 	t_philo				*philo;
 }						t_info;
 typedef struct s_philo
@@ -47,7 +46,7 @@ typedef struct s_philo
 	int					cnt_times_ate;
 	size_t				time_last_ate;
 	pthread_mutex_t		lock_time_last_ate;
-	pthread_t			thread_phil;
+	pthread_t			thr;
 	t_info				*info;
 }						t_philo;
 
@@ -56,7 +55,8 @@ int						ft_isdigit(int c);
 int						ft_atoi(const char *str);
 int						init(t_info *info, int argc, char **argv);
 size_t					get_millisecond(void);
-void					*control_philo(void *p);
+void					*philo(void *p);
+int						start_monitor(t_info *info);
 void					*monitor_philo(void *p);
 void					print_action(t_philo *philo, char *action);
 void					free_all(t_info *info);

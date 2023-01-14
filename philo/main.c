@@ -6,33 +6,36 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 10:18:06 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 11:15:52 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
 
-int	philo(t_info *info)
+int	start_philo(t_info *info)
 {
-	int	i;
+	int		i;
+	int		j;
+	bool	error_flag;
 
 	i = 0;
+	error_flag = false;
 	while (i < info->num_philo)
 	{
-		if (pthread_create(&info->philo[i].thread_phil, NULL, control_philo, \
-		&info->philo[i]))
-			return (-1);
+		if (pthread_create(&info->philo[i].thr, NULL, philo, &info->philo[i]))
+		{
+			error_flag = true;
+			break ;
+		}
 		i++;
 	}
-	if (pthread_create(&info->thread_moni, NULL, monitor_philo, info))
+	if (start_monitor(info) == -1)
+		error_flag = true;
+	j = 0;
+	while (j < i)
+		pthread_join(info->philo[j++].thr, NULL);
+	if (error_flag)
 		return (-1);
-	i = 0;
-	while (i < info->num_philo)
-	{
-		pthread_join(info->philo[i].thread_phil, NULL);
-		i++;
-	}
-	pthread_join(info->thread_moni, NULL);
 	return (0);
 }
 
@@ -47,7 +50,7 @@ int	main(int argc, char **argv)
 		return (1);
 	if (init(info, argc, argv) == -1)
 		return (1);
-	if (philo(info) == -1)
+	if (start_philo(info) == -1)
 	{
 		free_all(info);
 		return (1);
