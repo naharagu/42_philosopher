@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 13:10:52 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 13:22:49 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void	philo_eat(t_philo *philo)
 	num = philo->info->num_philo;
 	print_action(philo, "is eating");
 	ajust_time(philo->info->time_eat);
+	pthread_mutex_lock(&philo->info->lock_time_stamp);
+	philo->info->time_stamp = get_millisecond();
+	pthread_mutex_unlock(&philo->info->lock_time_stamp);
 	pthread_mutex_lock(&philo->lock_time_last_ate);
 	philo->time_last_ate = get_millisecond();
 	pthread_mutex_unlock(&philo->lock_time_last_ate);
@@ -72,6 +75,9 @@ void	philo_sleep_think(t_philo *philo)
 	}
 	print_action(philo, "is sleeping");
 	ajust_time(philo->info->time_sleep);
+	pthread_mutex_lock(&philo->info->lock_time_stamp);
+	philo->info->time_stamp = get_millisecond();
+	pthread_mutex_unlock(&philo->info->lock_time_stamp);
 	print_action(philo, "is thinking");
 	return ;
 }
@@ -81,7 +87,7 @@ void	*philo(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 1)
 		ajust_time(200);
 	while (true)
 	{
