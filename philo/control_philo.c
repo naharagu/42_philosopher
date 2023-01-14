@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/13 14:21:49 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:08:24 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	philo_eat(t_philo *philo)
 	num = philo->info->num_philo;
 	print_action(philo, "is eating");
 	ajust_time(philo->info->time_eat);
-	pthread_mutex_lock(&philo->info->time_lock);
+	pthread_mutex_lock(&philo->lock_time_last_ate);
 	philo->time_last_ate = get_millisecond();
-	pthread_mutex_unlock(&philo->info->time_lock);
+	pthread_mutex_unlock(&philo->lock_time_last_ate);
 	pthread_mutex_unlock(&philo->info->fork[id - 1]);
 	pthread_mutex_unlock(&philo->info->fork[id % num]);
 	return ;
@@ -72,18 +72,18 @@ void	*control_philo(void *p)
 
 	philo = (t_philo *)p;
 	if (philo->id % 2 == 1)
-		usleep(100);
+		usleep(200);
 	while (true)
 	{
 		philo_fork(philo);
 		philo_eat(philo);
 		philo_sleep_think(philo);
-		pthread_mutex_lock(&philo->info->control_lock);
-		if (philo->info->flag_end)
+		pthread_mutex_lock(&philo->info->lock_end);
+		if (philo->info->end_flag)
 		{
-			pthread_mutex_unlock(&philo->info->control_lock);
+			pthread_mutex_unlock(&philo->info->lock_end);
 			return (NULL);
 		}
-		pthread_mutex_unlock(&philo->info->control_lock);
+		pthread_mutex_unlock(&philo->info->lock_end);
 	}
 }

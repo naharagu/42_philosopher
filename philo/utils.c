@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:43:44 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/13 09:53:57 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 08:52:50 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ void	print_action(t_philo *philo, char *action)
 {
 	size_t	time;
 
-	pthread_mutex_lock(&philo->info->control_lock);
-	if (philo->info->flag_end)
+	pthread_mutex_lock(&philo->info->lock_end);
+	if (philo->info->end_flag)
 	{
-		pthread_mutex_unlock(&philo->info->control_lock);
+		pthread_mutex_unlock(&philo->info->lock_end);
 		return ;
 	}
-	pthread_mutex_unlock(&philo->info->control_lock);
-	pthread_mutex_lock(&philo->info->time_lock);
+	pthread_mutex_unlock(&philo->info->lock_end);
+	pthread_mutex_lock(&philo->info->lock_time_stamp);
 	philo->info->time_stamp = get_millisecond();
-	pthread_mutex_unlock(&philo->info->time_lock);
-	pthread_mutex_lock(&philo->info->print_lock);
 	time = philo->info->time_stamp - philo->info->time_start;
+	pthread_mutex_unlock(&philo->info->lock_time_stamp);
+	pthread_mutex_lock(&philo->info->print_lock);
 	printf("%lu %d %s\n", time, philo->id, action);
 	pthread_mutex_unlock(&philo->info->print_lock);
 }
@@ -48,11 +48,12 @@ void	free_all(t_info *info)
 	while (i < info->num_philo)
 	{
 		pthread_mutex_destroy(&info->fork[i]);
+		pthread_mutex_destroy(&info->philo[i].lock_time_last_ate);
 		i++;
 	}
-	pthread_mutex_destroy(&info->print_lock);
-	pthread_mutex_destroy(&info->control_lock);
-	pthread_mutex_destroy(&info->time_lock);
+	pthread_mutex_destroy(&info->lock_end);
+	pthread_mutex_destroy(&info->lock_num_eat);
+	pthread_mutex_destroy(&info->lock_time_stamp);
 	free(info->philo);
 	free(info->fork);
 	free(info);

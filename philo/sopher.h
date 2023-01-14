@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/13 09:50:06 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 08:49:03 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,13 @@ typedef struct s_info
 	int					num_finish_must;
 	size_t				time_stamp;
 	size_t				time_start;
-	bool				flag_end;
+	bool				end_flag;
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		print_lock;
-	pthread_mutex_t		control_lock;
-	pthread_mutex_t		time_lock;
+	pthread_mutex_t		lock_end;
+	pthread_mutex_t		lock_num_eat;
+	pthread_mutex_t		lock_time_stamp;
+	pthread_t			thread_moni;
 	t_philo				*philo;
 }						t_info;
 typedef struct s_philo
@@ -45,8 +47,8 @@ typedef struct s_philo
 	int					id;
 	int					cnt_times_ate;
 	size_t				time_last_ate;
+	pthread_mutex_t		lock_time_last_ate;
 	pthread_t			thread_phil;
-	pthread_t			thread_moni;
 	t_info				*info;
 }						t_philo;
 

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 10:38:50 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/13 10:59:45 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:17:05 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,40 +16,59 @@ void	print_died(t_philo *philo)
 {
 	size_t	time;
 
-	pthread_mutex_lock(&philo->info->time_lock);
+	pthread_mutex_lock(&philo->info->lock_time_stamp);
 	philo->info->time_stamp = get_millisecond();
-	pthread_mutex_unlock(&philo->info->time_lock);
-	pthread_mutex_lock(&philo->info->print_lock);
 	time = philo->info->time_stamp - philo->info->time_start;
+	pthread_mutex_unlock(&philo->info->lock_time_stamp);
+	pthread_mutex_lock(&philo->info->print_lock);
 	printf("%lu %d %s\n", time, philo->id, "died");
 	pthread_mutex_unlock(&philo->info->print_lock);
 }
 
+int	check_died(int i, t_philo *philo)
+{
+	size_t	now;
+
+	pthread_mutex_lock(&philo->lock_time_last_ate);
+	now = get_millisecond();
+	if ((now - philo->time_last_ate) > philo->info->time_die)
+	{
+		pthread_mutex_unlock(&philo->lock_time_last_ate);
+		pthread_mutex_lock(&philo->info->lock_end);
+		philo->info->end_flag = true;
+		pthread_mutex_unlock(&philo->info->lock_end);
+		print_died(philo);
+		return (1);
+	}
+	pthread_mutex_unlock(&philo->lock_time_last_ate);
+	return (0);
+}
+
 void	*monitor_philo(void *p)
 {
-	t_philo	*philo;
+	int		i;
 	t_info	*info;
 
-	philo = (t_philo *) p;
-	info = philo->info;
+	info = (t_info *) p;
 	while (true)
 	{
-		pthread_mutex_lock(&info->control_lock);
+		pthread_mutex_lock(&info->lock_num_eat);
 		if (info->num_finish_must == info->num_philo)
 		{
-			info->flag_end = true;
-			pthread_mutex_unlock(&info->control_lock);
+			pthread_mutex_unlock(&info->lock_num_eat);
+			pthread_mutex_lock(&info->lock_end);
+			info->end_flag = true;
+			pthread_mutex_unlock(&info->lock_end);
 			return (NULL);
 		}
-		if ((get_millisecond() - philo->time_last_ate) > info->time_die
-			&& !info->flag_end)
+		pthread_mutex_unlock(&info->lock_num_eat);
+		i = 0;
+		while (i < info->num_philo)
 		{
-			print_died(philo);
-			info->flag_end = true;
-			pthread_mutex_unlock(&info->control_lock);
-			pthread_mutex_unlock(&info->fork[philo->id - 1]);
-			return (NULL);
+			if (check_died(i, &info->philo[i]))
+				return (NULL);
+			i++;
 		}
-		pthread_mutex_unlock(&info->control_lock);
+		usleep(100);
 	}
 }
