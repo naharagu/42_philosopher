@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 09:36:26 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:53:29 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ void	philo_fork(t_philo *philo)
 	num = philo->info->num_philo;
 	pthread_mutex_lock(&philo->info->fork[id - 1]);
 	print_action(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->info->fork[id % num]);
+	if (num == 1)
+		return ;
+	if (id != num - 1)
+		pthread_mutex_lock(&philo->info->fork[id]);
+	else if (id == num - 1)
+		pthread_mutex_lock(&philo->info->fork[num - 1]);
 	print_action(philo, "has taken a fork");
 	return ;
 }
@@ -48,7 +53,10 @@ void	philo_eat(t_philo *philo)
 	philo->time_last_ate = get_millisecond();
 	pthread_mutex_unlock(&philo->lock_time_last_ate);
 	pthread_mutex_unlock(&philo->info->fork[id - 1]);
-	pthread_mutex_unlock(&philo->info->fork[id % num]);
+	if (id != num - 1)
+		pthread_mutex_unlock(&philo->info->fork[id]);
+	else if (id == num - 1)
+		pthread_mutex_unlock(&philo->info->fork[num - 1]);
 	return ;
 }
 
@@ -56,9 +64,11 @@ void	philo_sleep_think(t_philo *philo)
 {
 	if (philo->info->num_must_eat != -1)
 	{
+		pthread_mutex_lock(&philo->info->lock_num_eat);
 		philo->cnt_times_ate++;
 		if (philo->cnt_times_ate == philo->info->num_must_eat)
 			philo->info->num_finish_must++;
+		pthread_mutex_unlock(&philo->info->lock_num_eat);
 	}
 	print_action(philo, "is sleeping");
 	ajust_time(philo->info->time_sleep);
@@ -76,6 +86,8 @@ void	*control_philo(void *p)
 	while (true)
 	{
 		philo_fork(philo);
+		if (philo->info->num_philo == 1)
+			return (NULL);
 		philo_eat(philo);
 		philo_sleep_think(philo);
 		pthread_mutex_lock(&philo->info->lock_end);
