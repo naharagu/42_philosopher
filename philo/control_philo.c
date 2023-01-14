@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 11:13:26 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 12:14:13 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	philo_fork(t_philo *philo)
 	print_action(philo, "has taken a fork");
 	if (num == 1)
 		return ;
-	if (id != num - 1)
+	if (id != num)
 		pthread_mutex_lock(&philo->info->fork[id]);
-	else if (id == num - 1)
-		pthread_mutex_lock(&philo->info->fork[num - 1]);
+	else if (id == num)
+		pthread_mutex_lock(&philo->info->fork[0]);
 	print_action(philo, "has taken a fork");
 	return ;
 }
@@ -53,10 +53,10 @@ void	philo_eat(t_philo *philo)
 	philo->time_last_ate = get_millisecond();
 	pthread_mutex_unlock(&philo->lock_time_last_ate);
 	pthread_mutex_unlock(&philo->info->fork[id - 1]);
-	if (id != num - 1)
+	if (id != num)
 		pthread_mutex_unlock(&philo->info->fork[id]);
-	else if (id == num - 1)
-		pthread_mutex_unlock(&philo->info->fork[num - 1]);
+	else if (id == num)
+		pthread_mutex_unlock(&philo->info->fork[0]);
 	return ;
 }
 
@@ -82,7 +82,7 @@ void	*philo(void *p)
 
 	philo = (t_philo *)p;
 	if (philo->id % 2 == 1)
-		usleep(500);
+		usleep(200);
 	while (true)
 	{
 		philo_fork(philo);
