@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 10:38:50 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 09:17:05 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/14 09:25:56 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ void	*monitor_philo(void *p)
 				return (NULL);
 			i++;
 		}
-		usleep(100);
+		usleep(200);
 	}
 }
