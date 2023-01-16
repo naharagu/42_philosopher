@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 10:38:50 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/16 19:57:44 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:24:18 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,8 @@ void	print_died(t_philo *philo)
 {
 	size_t	time;
 
-	pthread_mutex_lock(&philo->info->lock_time_stamp);
-	philo->info->time_stamp = get_millisecond();
-	time = philo->info->time_stamp - philo->info->time_start;
+	time = get_millisecond() - philo->info->time_start;
 	printf("%lu %d %s\n", time, philo->id, "died");
-	pthread_mutex_unlock(&philo->info->lock_time_stamp);
 }
 
 int	check_died(int i, t_philo *philo)
@@ -48,7 +45,6 @@ void	*monitor_philo(void *p)
 	t_info	*info;
 
 	info = (t_info *) p;
-	usleep(800);
 	while (true)
 	{
 		pthread_mutex_lock(&info->lock_num_eat);

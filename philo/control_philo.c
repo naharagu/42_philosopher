@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/16 18:07:32 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:12:28 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ void	*philo(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	if (philo->id % 2 == 1)
-		ajust_time(50);
+	if (philo->id % 2 == 0)
+		ajust_time(100);
 	while (true)
 	{
 		philo_fork(philo);
