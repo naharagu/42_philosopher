@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 10:38:50 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 12:04:29 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:57:44 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	*monitor_philo(void *p)
 	t_info	*info;
 
 	info = (t_info *) p;
+	usleep(800);
 	while (true)
 	{
 		pthread_mutex_lock(&info->lock_num_eat);
@@ -67,13 +68,13 @@ void	*monitor_philo(void *p)
 				return (NULL);
 			i++;
 		}
-		usleep(200);
+		usleep(1000);
 	}
 }
 
 int	start_monitor(t_info *info)
 {
-	pthread_t			thread_moni;
+	pthread_t	thread_moni;
 
 	if (pthread_create(&thread_moni, NULL, monitor_philo, info))
 		return (-1);
