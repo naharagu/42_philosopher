@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 21:03:22 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/17 22:06:58 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ int	main(int argc, char **argv)
 	t_info	*info;
 
 	if (validate_args(argc, argv) == -1)
-	{
-		printf("arg error");
 		return (1);
-	}
 	info = malloc(sizeof(t_info));
 	if (!info)
 		return (1);
