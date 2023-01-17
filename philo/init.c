@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:47:52 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 20:21:40 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:28:58 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	init_philo(t_info *info)
 int	init(t_info *info, int argc, char **argv)
 {
 	info->num_philo = ft_atoi(argv[1]);
-	info->time_die = ft_atoi(argv[2]);
-	info->time_eat = ft_atoi(argv[3]);
-	info->time_sleep = ft_atoi(argv[4]);
+	info->time_die = (time_t)ft_atoi(argv[2]);
+	info->time_eat = (time_t)ft_atoi(argv[3]);
+	info->time_sleep = (time_t)ft_atoi(argv[4]);
 	if (argc == 6)
 		info->num_must_eat = ft_atoi(argv[5]);
 	else

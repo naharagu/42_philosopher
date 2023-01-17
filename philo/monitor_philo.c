@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 10:38:50 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 20:07:21 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:32:53 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ int	start_monitor(t_info *info)
 
 	if (pthread_create(&thread_moni, NULL, monitor_philo, info))
 		return (-1);
-	pthread_detach(thread_moni);
+	pthread_join(thread_moni, NULL);
 	return (0);
 }

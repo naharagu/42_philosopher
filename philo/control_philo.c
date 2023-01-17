@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 20:21:44 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:42:13 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ void	ajust_time(time_t ajust_dutation)
 {
 	time_t	target_time;
 
-	target_time = get_millisecond() + ajust_dutation;
-	while (get_millisecond() < target_time)
-		usleep(200);
+	target_time = get_millisecond() * 1000 + ajust_dutation * 1000;
+	while (get_millisecond() * 1000 < target_time)
+		usleep(100);
 }
 
 void	philo_fork(t_philo *philo)
@@ -52,9 +52,6 @@ void	philo_eat(t_philo *philo)
 	philo->time_last_start_eating = get_millisecond();
 	pthread_mutex_unlock(&philo->lock_time_last_ate);
 	ajust_time(philo->info->time_eat);
-	// pthread_mutex_lock(&philo->info->lock_time_stamp);
-	// philo->info->time_stamp = get_millisecond();
-	// pthread_mutex_unlock(&philo->info->lock_time_stamp);
 	pthread_mutex_unlock(&philo->info->fork[id - 1]);
 	if (id != num)
 		pthread_mutex_unlock(&philo->info->fork[id]);
@@ -75,9 +72,6 @@ void	philo_sleep_think(t_philo *philo)
 	}
 	print_action(philo, "is sleeping");
 	ajust_time(philo->info->time_sleep);
-	// pthread_mutex_lock(&philo->info->lock_time_stamp);
-	// philo->info->time_stamp = get_millisecond();
-	// pthread_mutex_unlock(&philo->info->lock_time_stamp);
 	print_action(philo, "is thinking");
 	return ;
 }
@@ -87,9 +81,9 @@ void	*philo(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	// philo->time_last_start_eating = get_millisecond();
+	philo->time_last_start_eating = get_millisecond();
 	if (philo->id % 2 == 0)
-		usleep(100);
+		usleep(500);
 	while (true)
 	{
 		philo_fork(philo);
