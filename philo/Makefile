@@ -2,6 +2,7 @@ CC			=	gcc
 C_FLAGS 	=	-Wall -Werror -Wextra
 NAME		=	philo
 SRCS		= 	main.c \
+				validate.c \
 				init.c \
 				utils.c \
 				control_philo.c \
@@ -14,7 +15,7 @@ $(NAME): $(OBJS)
 
 $(OBJS_DIR)%.o: %.c
 	mkdir -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	$(CC) $(C_FLAGS) -o $@ -c $<
 
 all: $(NAME)
 

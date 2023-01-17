@@ -6,15 +6,15 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/16 20:12:28 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:21:44 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sopher.h"
 
-void	ajust_time(size_t ajust_dutation)
+void	ajust_time(time_t ajust_dutation)
 {
-	size_t	target_time;
+	time_t	target_time;
 
 	target_time = get_millisecond() + ajust_dutation;
 	while (get_millisecond() < target_time)
@@ -23,8 +23,8 @@ void	ajust_time(size_t ajust_dutation)
 
 void	philo_fork(t_philo *philo)
 {
-	size_t	id;
-	size_t	num;
+	int	id;
+	int	num;
 
 	id = philo->id;
 	num = philo->info->num_philo;
@@ -34,7 +34,7 @@ void	philo_fork(t_philo *philo)
 		return ;
 	if (id != num)
 		pthread_mutex_lock(&philo->info->fork[id]);
-	else if (id == num)
+	else
 		pthread_mutex_lock(&philo->info->fork[0]);
 	print_action(philo, "has taken a fork");
 	return ;
@@ -42,23 +42,23 @@ void	philo_fork(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	size_t	id;
-	size_t	num;
+	int	id;
+	int	num;
 
 	id = philo->id;
 	num = philo->info->num_philo;
 	print_action(philo, "is eating");
-	ajust_time(philo->info->time_eat);
-	pthread_mutex_lock(&philo->info->lock_time_stamp);
-	philo->info->time_stamp = get_millisecond();
-	pthread_mutex_unlock(&philo->info->lock_time_stamp);
 	pthread_mutex_lock(&philo->lock_time_last_ate);
-	philo->time_last_ate = get_millisecond();
+	philo->time_last_start_eating = get_millisecond();
 	pthread_mutex_unlock(&philo->lock_time_last_ate);
+	ajust_time(philo->info->time_eat);
+	// pthread_mutex_lock(&philo->info->lock_time_stamp);
+	// philo->info->time_stamp = get_millisecond();
+	// pthread_mutex_unlock(&philo->info->lock_time_stamp);
 	pthread_mutex_unlock(&philo->info->fork[id - 1]);
 	if (id != num)
 		pthread_mutex_unlock(&philo->info->fork[id]);
-	else if (id == num)
+	else
 		pthread_mutex_unlock(&philo->info->fork[0]);
 	return ;
 }
@@ -70,14 +70,14 @@ void	philo_sleep_think(t_philo *philo)
 		pthread_mutex_lock(&philo->info->lock_num_eat);
 		philo->cnt_times_ate++;
 		if (philo->cnt_times_ate == philo->info->num_must_eat)
-			philo->info->num_finish_must++;
+			philo->info->cnt_finish_eating++;
 		pthread_mutex_unlock(&philo->info->lock_num_eat);
 	}
 	print_action(philo, "is sleeping");
 	ajust_time(philo->info->time_sleep);
-	pthread_mutex_lock(&philo->info->lock_time_stamp);
-	philo->info->time_stamp = get_millisecond();
-	pthread_mutex_unlock(&philo->info->lock_time_stamp);
+	// pthread_mutex_lock(&philo->info->lock_time_stamp);
+	// philo->info->time_stamp = get_millisecond();
+	// pthread_mutex_unlock(&philo->info->lock_time_stamp);
 	print_action(philo, "is thinking");
 	return ;
 }
@@ -87,8 +87,9 @@ void	*philo(void *p)
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
+	// philo->time_last_start_eating = get_millisecond();
 	if (philo->id % 2 == 0)
-		ajust_time(100);
+		usleep(100);
 	while (true)
 	{
 		philo_fork(philo);

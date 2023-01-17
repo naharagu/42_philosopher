@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 11:14:04 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:16:16 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ typedef struct s_philo	t_philo;
 typedef struct s_info
 {
 	int					num_philo;
-	int					time_die;
-	int					time_eat;
-	int					time_sleep;
+	time_t				time_die;
+	time_t				time_eat;
+	time_t				time_sleep;
 	int					num_must_eat;
-	int					num_finish_must;
-	size_t				time_stamp;
-	size_t				time_start;
+	int					cnt_finish_eating;
+	time_t				time_stamp;
+	time_t				time_start;
 	bool				end_flag;
 	pthread_mutex_t		*fork;
 	pthread_mutex_t		lock_end;
@@ -44,7 +44,7 @@ typedef struct s_philo
 {
 	int					id;
 	int					cnt_times_ate;
-	size_t				time_last_ate;
+	time_t				time_last_start_eating;
 	pthread_mutex_t		lock_time_last_ate;
 	pthread_t			thr;
 	t_info				*info;
@@ -54,7 +54,7 @@ int						validate_args(int argc, char **argv);
 int						ft_isdigit(int c);
 int						ft_atoi(const char *str);
 int						init(t_info *info, int argc, char **argv);
-size_t					get_millisecond(void);
+time_t					get_millisecond(void);
 void					*philo(void *p);
 int						start_monitor(t_info *info);
 void					*monitor_philo(void *p);

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/14 11:50:33 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:02:47 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	start_philo(t_info *info)
 
 	i = 0;
 	error_flag = false;
+	info->time_stamp = get_millisecond();
+	info->time_start = get_millisecond();
 	while (i < info->num_philo)
 	{
 		if (pthread_create(&info->philo[i].thr, NULL, philo, &info->philo[i]))
@@ -56,34 +58,5 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	free_all(info);
-	return (0);
-}
-
-int	validate_args(int argc, char **argv)
-{
-	int	i;
-	int	j;
-
-	if (argc != 5 && argc != 6)
-		return (-1);
-	i = 1;
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (!ft_isdigit(argv[i][j]))
-				return (-1);
-			j++;
-		}
-		i++;
-	}
-	i = 1;
-	while (i < argc)
-	{
-		if (ft_atoi(argv[i]) <= 0)
-			return (-1);
-		i++;
-	}
 	return (0);
 }
