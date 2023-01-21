@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/31 20:57:03 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 20:42:13 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/21 10:05:50 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,13 @@ void	philo_sleep_think(t_philo *philo)
 	return ;
 }
 
-void	*philo(void *p)
+void	*control_philo(void *p)
 {
 	t_philo	*philo;
 
 	philo = (t_philo *)p;
-	philo->time_last_start_eating = get_millisecond();
+	while (get_millisecond() * 1000 < philo->info->time_start * 1000)
+		usleep(100);
 	if (philo->id % 2 == 0)
 		usleep(500);
 	while (true)

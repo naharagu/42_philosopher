@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 22:06:58 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/21 10:11:26 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,16 @@ int	start_philo(t_info *info)
 	int		j;
 	bool	error_flag;
 
-	i = 0;
+	i = -1;
 	error_flag = false;
-	info->time_stamp = get_millisecond();
-	info->time_start = get_millisecond();
-	while (i < info->num_philo)
+	while (++i < info->num_philo)
 	{
-		if (pthread_create(&info->philo[i].thr, NULL, philo, &info->philo[i]))
+		if (pthread_create(&info->philo[i].thr, NULL, control_philo,
+				&info->philo[i]))
 		{
 			error_flag = true;
 			break ;
 		}
-		i++;
 	}
 	if (start_monitor(info) == -1)
 		error_flag = true;
@@ -60,3 +58,8 @@ int	main(int argc, char **argv)
 	free_all(info);
 	return (0);
 }
+
+// __attribute__((destructor)) static void destructor()
+// {
+// 	system("leaks -q philo");
+// }

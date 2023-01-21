@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:43 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 21:33:59 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:58:55 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int						ft_isdigit(int c);
 int						ft_atoi(const char *str);
 int						init(t_info *info, int argc, char **argv);
 time_t					get_millisecond(void);
-void					*philo(void *p);
+void					*control_philo(void *p);
 int						start_monitor(t_info *info);
 void					*monitor_philo(void *p);
 void					print_action(t_philo *philo, char *action);

@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 10:43:44 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/17 20:16:01 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/21 09:54:45 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	free_all(t_info *info)
 	pthread_mutex_destroy(&info->lock_time_stamp);
 	free(info->philo);
 	free(info->fork);
+	free(info);
 	return ;
 }

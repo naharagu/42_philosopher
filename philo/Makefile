@@ -1,5 +1,5 @@
 CC			=	gcc
-C_FLAGS 	=	-Wall -Werror -Wextra
+C_FLAGS 	=	-Wall -Werror -Wextra -pthread
 NAME		=	philo
 SRCS		= 	main.c \
 				validate.c \
