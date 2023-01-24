@@ -6,7 +6,7 @@
 /*   By: naharagu <naharagu@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:49:04 by naharagu          #+#    #+#             */
-/*   Updated: 2023/01/21 10:11:26 by naharagu         ###   ########.fr       */
+/*   Updated: 2023/01/24 09:25:06 by naharagu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,17 @@ int	start_philo(t_info *info)
 
 int	main(int argc, char **argv)
 {
-	t_info	*info;
+	t_info	info;
 
 	if (validate_args(argc, argv) == -1)
 		return (1);
-	info = malloc(sizeof(t_info));
-	if (!info)
+	if (init(&info, argc, argv) == -1)
 		return (1);
-	if (init(info, argc, argv) == -1)
-		return (1);
-	if (start_philo(info) == -1)
+	if (start_philo(&info) == -1)
 	{
-		free_all(info);
+		free_all(&info);
 		return (1);
 	}
-	free_all(info);
+	free_all(&info);
 	return (0);
 }
-
-// __attribute__((destructor)) static void destructor()
-// {
-// 	system("leaks -q philo");
-// }
